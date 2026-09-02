@@ -13,3 +13,5 @@ git push: Wysyła Twoje lokalne zapisy (commity) na zdalny serwer, np. do GitHub
 git pull: Pobiera najnowsze zmiany ze zdalnego serwera i automatycznie łączy je z Twoim lokalnym kodem. Utrzymuje Twoją lokalną wersję projektu w pełnej aktualności.
 
 git branch: Wyświetla listę istniejących gałęzi w projekcie lub pozwala utworzyć nową. Umożliwia bezpieczne rozwijanie nowych funkcji w izolacji od głównego kodu.
+
+zmiana2
