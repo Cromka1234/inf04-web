@@ -12,3 +12,5 @@ Repozytorium z zadaniami z przedmiotu.
 6 komit
 7 komit
 8 komit
+
+zmiana1
