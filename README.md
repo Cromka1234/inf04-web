@@ -9,3 +9,4 @@ Repozytorium z zadaniami z przedmiotu.
 3 komit
 4 komit
 5 komit
+6 komit
