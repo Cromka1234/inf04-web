@@ -22,3 +22,6 @@ Stos technologii
 | Bootstrap | Framework CSS ułatwiający szybkie stylowanie i tworzenie responsywnych stron. |
 | Vite | Narzędzie do bardzo szybkiego budowania i serwowania aplikacji. |
 | Vitest | Szybkie narzędzie przeznaczone do wykonywania testów jednostkowych w kodzie. |
+
+Jak oddaję zadania
+Tworzę osobną gałąź dla zadania (`inf04-mbNN`), wysyłam zmiany na zdalne repozytorium (`push`), a następnie tworzę Pull Request na GitHubie. Po weryfikacji zmian scalam kod do głównej gałęzi (`merge`).
