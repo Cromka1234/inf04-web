@@ -1,0 +1,142 @@
+/* Kolor przewodni: #5B3FD6
+    0x5B = 5·16 + 11 =  91
+    0x3F = 3·16 + 15 =  63
+    0xD6 = 13·16 + 6 = 214
+    czyli rgb(91, 63, 214) */
+
+:root {
+    --kolor-glowny: #5B3FD6;     /* rgb(91, 63, 214) */
+    --kolor-ciemny: #40299B;     /* rgb(64, 41, 155) */
+    --kolor-blad:   #C0392B;     /* rgb(192, 57, 43) */
+    --kolor-tlo:    #F4F4F7;
+    --kolor-tekst:  #1E1E24;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--kolor-tekst);
+    background: var(--kolor-tlo);
+}
+
+main, .stopka {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.naglowek {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.awatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    flex-shrink: 0;         /* awatar nie kurczy się na wąskim ekranie */
+}
+
+.naglowek h1 {
+    margin: 0;
+    font-size: 1.9rem;
+    color: var(--kolor-glowny);
+}
+
+.podtytul {
+    margin: 0.25rem 0 0;
+    color: #5A5A66;
+}
+
+section {
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #E3E3EA;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    border-bottom: 2px solid var(--kolor-glowny);
+    padding-bottom: 0.4rem;
+}
+
+.lista-umiejetnosci {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* pole z błędem — czerwona ramka dodawana przez JavaScript */
+.pole--blad input,
+.pole--blad select,
+.pole--blad textarea {
+    border-color: var(--kolor-blad);
+}
+
+.blad {
+    margin: 0.3rem 0 0;
+    min-height: 1.2rem;       /* miejsce zarezerwowane, układ nie skacze */
+    font-size: 0.875rem;
+    color: var(--kolor-blad);
+}
+
+.przycisk {
+    padding: 0.6rem 1.4rem;
+    font: inherit;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: var(--kolor-glowny);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.przycisk:hover {
+    background: var(--kolor-ciemny);
+}
+
+.podziekowanie {
+    padding: 1rem 1.25rem;
+    background: #EFEBFC;
+    border-left: 4px solid var(--kolor-glowny);
+    border-radius: 6px;
+}
+
+.podziekowanie h3 {
+    margin-top: 0;
+    color: var(--kolor-glowny);
+}
+
+.stopka {
+    padding-top: 0.5rem;
+    padding-bottom: 2rem;
+    font-size: 0.9rem;
+    color: #5A5A66;
+}
+
+a {
+    color: var(--kolor-glowny);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--kolor-ciemny);
+}
