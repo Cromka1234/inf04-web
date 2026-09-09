@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wizytówka – Jan Kowalski</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="naglowek">
+        <img class="awatar" src="rafon.jpg" alt="Awatar: rafonix" width="200" height="200">
+        <div class="naglowek__tekst">
+            <h1>Jan Kowalski</h1>
+            <p class="podtytul">Technik programista · klasa 4</p>
+        </div>
+    </header>
+
+    <main>
+        <section id="o-mnie">
+            <h2>O mnie</h2>
+            <p>
+                Uczę się programowania aplikacji webowych. Najbardziej interesuje mnie 
+                front-end, ale chcę rozumieć też to, co dzieje się po stronie serwera.
+            </p>
+        </section>
+        <section id="umiejetnosci">
+            <h2>Umiejętności</h2>
+            <ul class="lista-umiejetnosci">
+                <li>HTML – struktura semantyczna, formularze</li>
+                <li>CSS – selektory, box model, flexbox</li>
+                <li>JavaScript – DOM, zdarzenia, ES6</li>
+                <li>Git – gałęzie, Pull Request</li>
+            </ul>
+        </section>
+
+        <section id="kontakt">
+            <h2>Kontakt</h2>
+            
+            <form id="formularz" novalidate>
+                <div class="pole">
+                    <label for="imie">Imię i nazwisko</label>
+                    <input type="text" id="imie" name="imie">
+                    <p class="blad" id="blad-imie"></p>
+                </div>
+                
+                <div class="pole">
+                    <label for="email">Adres e-mail</label>
+                    <input type="email" id="email" name="email">
+                    <p class="blad" id="blad-email"></p>
+                </div>
+                
+                <div class="pole">
+                    <label for="temat">Temat</label>
+                    <select id="temat" name="temat">
+                        <option value="">– wybierz temat –</option>
+                        <option value="wspolpraca">Propozycja współpracy</option>
+                        <option value="pytanie">Pytanie o projekt</option>
+                        <option value="inne">Inne</option>
+                    </select>
+                    <p class="blad" id="blad-temat"></p>
+                </div>
+                
+                <div class="pole">
+                    <label for="wiadomosc">Wiadomość</label>
+                    <textarea id="wiadomosc" name="wiadomosc" rows="5"></textarea>
+                    <p class="blad" id="blad-wiadomosc"></p>
+                </div>
+                
+                <button type="submit" class="przycisk">Wyślij wiadomość</button>
+            </form>
+
+            <div id="podziekowanie" class="podziekowanie" hidden>
+                <h3>Dziękuję za wiadomość!</h3>
+                <p id="podziekowanie-tresc"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="stopka">
+        <p>
+            Jan Kowalski · 
+            <a href="https://github.com/jan-kowalski">GitHub</a> · 
+            <a href="mailto:jan.kowalski@example.com">jan.kowalski@example.com</a>
+        </p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
