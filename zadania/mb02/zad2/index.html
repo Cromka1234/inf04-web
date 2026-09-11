@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES5 vs ES6 — porównanie wyników</title>
+    <style>
+        body {
+            max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem;
+            font-family: "Segoe UI", Arial, sans-serif; line-height: 1.6;
+            color: #1E1E24; background: #F4F4F7;
+        }
+        h1 { font-size: 1.5rem; color: #5B3FD6; }
+        table { width: 100%; border-collapse: collapse; background: #FFFFFF; }
+        th, td { padding: 0.5rem 0.7rem; border: 1px solid #E3E3EA; text-align: left; }
+        th { background: #EFEBFC; }
+        td.wynik { font-family: Consolas, monospace; font-size: 0.9rem; }
+        .ok   { color: #1B7F3B; font-weight: 600; }
+        .zle  { color: #C0392B; font-weight: 600; }
+        .brak { color: #8A8A99; }
+    </style>
+</head>
+<body>
+
+<h1>ES5 vs ES6 — czy wyniki są identyczne?</h1>
+<p>
+    Kolumna <strong>ES5</strong> to wzorzec – jest gotowa od początku.
+    Wiersze w kolumnie <strong>ES6</strong> zapalają się na zielono w miarę,
+    jak dopisujesz kolejne funkcje w <code>es6.js</code>. Odświeżaj tę stronę
+    po każdej z nich.
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Co sprawdzamy</th>
+            <th>ES5 — wzorzec</th>
+            <th>ES6 — Twój kod</th>
+            <th>Zgodne?</th>
+        </tr>
+    </thead>
+    <tbody id="wyniki"></tbody>
+</table>
+
+<!-- es5.js jako zwykły skrypt: zmienne trafiają do zakresu globalnego -->
+<script src="es5.js"></script>
+
+<!-- es6.js jako moduł: ma własny zakres, więc nazwy się nie zderzają -->
+<script type="module">
+    import * as es6 from "./es6.js";
+
+    const BRAK = "— jeszcze nie napisane —";
+    const tekst = wartosc => JSON.stringify(wartosc);
+
+    // Wywołuje funkcję z es6.js tylko wtedy, gdy ta już istnieje.
+    // Dzięki temu strona działa od pierwszego kroku, a nie dopiero na końcu.
+    function sprobuj(funkcja, ...argumenty) {
+        if (typeof funkcja !== "function") return BRAK;
+        if (argumenty.some(a => a === undefined)) return BRAK;
+        try {
+            return tekst(funkcja(...argumenty));
+        } catch (blad) {
+            return "błąd: " + blad.message;
+        }
+    }
+
+    const pierwszy = es6.kursy && es6.kursy[0];
+
+    // [ co sprawdzamy, wynik ES5 (wzorzec), wynik ES6 ]
+    // Kolejność wierszy ma znaczenie: dodajGodziny wywołujemy PRZED
+    // sprawdzeniem oryginału, żeby wyszła na jaw ewentualna modyfikacja.
+    const testy = [
+        ["kursy.length",
+         tekst(kursy.length),
+         es6.kursy ? tekst(es6.kursy.length) : BRAK],
+
+        ["nazwyAktywnych(kursy)",
+         tekst(nazwyAktywnych(kursy)),
+         sprobuj(es6.nazwyAktywnych, es6.kursy)],
+
+        ["sumaGodzin(kursy)",
+         tekst(sumaGodzin(kursy)),
+         sprobuj(es6.sumaGodzin, es6.kursy)],
+
+        ["opis(kursy[0])",
+         tekst(opis(kursy[0])),
+         sprobuj(es6.opis, pierwszy)],
+
+        ["dodajGodziny(kursy[0], 5) — nowy obiekt",
+         '{"nazwa":"React","godziny":35,"aktywny":true}',
+         sprobuj(es6.dodajGodziny, pierwszy, 5)],
+
+        ["oryginał po wywołaniu — musi zostać nietknięty",
+         tekst(kursy[0]),
+         pierwszy ? tekst(pierwszy) : BRAK],
+    ];
+
+    document.querySelector("#wyniki").innerHTML = testy.map(([co, wzorzec, moje]) => {
+        const czeka = moje === BRAK;
+        const zgodne = wzorzec === moje;
+        const klasa = czeka ? "brak" : zgodne ? "ok" : "zle";
+        const werdykt = czeka ? "czeka" : zgodne ? "tak" : "NIE";
+        return `
+            <tr>
+                <td>${co}</td>
+                <td class="wynik">${wzorzec}</td>
+                <td class="wynik ${czeka ? "brak" : ""}">${moje}</td>
+                <td class="${klasa}">${werdykt}</td>
+            </tr>
+        `;
+    }).join("");
+</script>
+
+</body>
+</html>
