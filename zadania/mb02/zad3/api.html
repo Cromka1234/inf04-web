@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Użytkownicy z API</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="naglowek">
+        <h1>Użytkownicy</h1>
+        <p class="podtytul">Dane pobrane z jsonplaceholder.typicode.com</p>
+    </header>
+
+    <main>
+        <div class="pole-filtra">
+            <label for="filtr">Szukaj po nazwie</label>
+            <input type="search" id="filtr" placeholder="np. Leanne" autocomplete="off">
+            <p class="licznik" id="licznik"></p>
+        </div>
+
+        <!-- Jeden pojemnik na wszystkie stany: ładowanie, błąd, lista, brak wyników. -->
+        <div id="wynik" class="wynik">
+            <p class="stan">Ładowanie...</p>
+        </div>
+    </main>
+
+    <script src="api.js"></script>
+</body>
+</html>

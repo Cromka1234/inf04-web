@@ -1,0 +1,148 @@
+/* Kolor przewodni: #5B3FD6 → rgb(91, 63, 214) */
+
+/* Zmienne w jednym miejscu – zmiana koloru to jedna linia, nie dwadzieścia */
+:root {
+    --kolor-glowny: #5B3FD6;
+    --kolor-ciemny: #40299B;
+    --kolor-blad: #C0392B;
+    --kolor-tlo: #F4F4F7;
+}
+
+/* width to CAŁA szerokość, razem z paddingiem i ramką */
+* { box-sizing: border-box; }
+
+/* Podstawa: brak marginesu okna, czytelna interlinia, szare tło */
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    line-height: 1.6;
+    color: #1E1E24;
+    background: var(--kolor-tlo);
+}
+
+/* Wspólna szerokość i wyśrodkowanie nagłówka oraz treści */
+.naglowek, main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Drobne poprawki odstępów i kolorów w nagłówku */
+.naglowek { padding-top: 2rem; }
+.naglowek h1 { margin: 0; color: var(--kolor-glowny); }
+.podtytul { margin: 0.25rem 0 1.5rem; color: #5A5A66; }
+
+/* ---------- filtr ---------- */
+
+/* Etykieta nad polem, nie obok – dlatego display: block */
+.pole-filtra label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+/* Pole węższe niż strona; font: inherit, bo pola mają własny systemowy krój */
+.pole-filtra input {
+    width: 100%;
+    max-width: 340px;
+    padding: 0.55rem 0.7rem;
+    font: inherit;
+    border: 1px solid #C7C7D1;
+    border-radius: 6px;
+    background: #FFFFFF;
+}
+
+/* Wyraźne zaznaczenie pola, w którym stoi kursor – także dla klawiatury */
+.pole-filtra input:focus {
+    outline: 2px solid var(--kolor-glowny);
+    outline-offset: 1px;
+    border-color: var(--kolor-glowny);
+}
+
+/* min-height rezerwuje miejsce, żeby lista nie skakała przy zmianie licznika */
+.licznik {
+    margin: 0.4rem 0 1.25rem;
+    min-height: 1.2rem;
+    font-size: 0.875rem;
+    color: #5A5A66;
+}
+
+/* ---------- lista kart ---------- */
+
+/* Flexbox z zawijaniem: karty same układają się w kolumny. */
+.lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0 0 2rem;
+    margin: 0;
+    list-style: none;
+}
+
+/* flex: rośnie | kurczy się | bazowo 260px – stąd 3 kolumny lub 1 */
+.karta {
+    flex: 1 1 260px;
+    background: #FFFFFF;
+    border: 1px solid #E3E3EA;
+    border-left: 4px solid var(--kolor-glowny);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+}
+
+/* Nazwa użytkownika – mniejsza niż h1, ale nadal nagłówek karty */
+.karta h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.05rem;
+    color: var(--kolor-ciemny);
+}
+
+/* Siatka dwukolumnowa: etykiety i wartości równają się w pionie */
+.karta dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.15rem 0.6rem;
+    font-size: 0.9rem;
+}
+
+/* Etykieta szara, wartość bez domyślnego wcięcia <dd> */
+.karta dt { color: #5A5A66; }
+.karta dd { margin: 0; }
+
+/* word-break, bo długie adresy e-mail rozpychałyby kartę */
+.karta a {
+    color: var(--kolor-glowny);
+    text-decoration: none;
+    word-break: break-all;
+}
+
+/* Widoczna reakcja na kursor */
+.karta a:hover {
+    text-decoration: underline;
+    color: var(--kolor-ciemny);
+}
+
+/* ---------- stany: ładowanie, brak wyników, błąd ---------- */
+
+/* Wspólny wygląd komunikatu. Przerywana ramka = „pusto, ale wszystko gra” */
+.stan {
+    padding: 1rem 1.25rem;
+    background: #FFFFFF;
+    border: 1px dashed #C7C7D1;
+    border-radius: 8px;
+    color: #5A5A66;
+}
+
+/* Dokłada się do .stan i przemalowuje go na czerwono – klasa „modyfikator” */
+.stan--blad {
+    border: 1px solid var(--kolor-blad);
+    border-left: 4px solid var(--kolor-blad);
+    background: #FDECEA;
+    color: var(--kolor-blad);
+}
+
+/* Pierwsze zdanie błędu w osobnej linii, żeby rzucało się w oczy */
+.stan--blad strong {
+    display: block;
+    margin-bottom: 0.3rem;
+}
