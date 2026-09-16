@@ -388,6 +388,35 @@
         </div>
     </div>
 
+    <!-- ===== OFFCANVAS: FILTRY ===== -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="panelFiltrow" aria-labelledby="panelFiltrowLabel">
+        <div class="offcanvas-header">
+            <h2 class="offcanvas-title h5" id="panelFiltrowLabel">Filtry</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Zamknij"></button>
+        </div>
+
+        <div class="offcanvas-body">
+            <p class="text-body-secondary">Zaznacz kategorie, które chcesz zobaczyć:</p>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="filtrGory" checked>
+                <label class="form-check-label" for="filtrGory">Góry</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="filtrMorze" checked>
+                <label class="form-check-label" for="filtrMorze">Morze</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="filtrMiasto" checked>
+                <label class="form-check-label" for="filtrMiasto">Miasto</label>
+            </div>
+
+            <button type="button" class="btn btn-primary w-100 mt-4" data-bs-dismiss="offcanvas">
+                Zamknij
+            </button>
+        </div>
+    </div>
+
     <!-- skrypt Bootstrapa na samym końcu -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
