@@ -57,4 +57,19 @@ pasekKategorii.addEventListener("click", event => {
     ustawFiltr(kat === "wszystkie" ? new Set(WSZYSTKIE_KATEGORIE) : new Set([kat]));
 });
 
+panelFiltrow.addEventListener("change", event => {
+    if (!event.target.matches('input[type="checkbox"]')) return;
+
+    const kategoria = CHECKBOX_KATEGORIA[event.target.id];
+    if (!kategoria) return;
+
+    const nowyZbior = new Set(aktywneKategorie);
+    if (event.target.checked) {
+        nowyZbior.add(kategoria);
+    } else {
+        nowyZbior.delete(kategoria);
+    }
+    ustawFiltr(nowyZbior);
+});
+
 odswiez();
