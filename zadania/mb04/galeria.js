@@ -1,6 +1,24 @@
 const WSZYSTKIE_KATEGORIE = ["gory", "morze", "miasto"];
+const KLUCZ_LOCALSTORAGE = "galeria-filtruj";
 
-let aktywneKategorie = new Set(WSZYSTKIE_KATEGORIE);
+function zapiszFiltr(zbior) {
+    localStorage.setItem(KLUCZ_LOCALSTORAGE, JSON.stringify([...zbior]));
+}
+
+function wczytajFiltr() {
+    const zapisane = localStorage.getItem(KLUCZ_LOCALSTORAGE);
+    if (!zapisane) return new Set(WSZYSTKIE_KATEGORIE);
+
+    try {
+        const tablica = JSON.parse(zapisane);
+        const poprawne = tablica.filter(k => WSZYSTKIE_KATEGORIE.includes(k));
+        return poprawne.length ? new Set(poprawne) : new Set(WSZYSTKIE_KATEGORIE);
+    } catch {
+        return new Set(WSZYSTKIE_KATEGORIE);
+    }
+}
+
+let aktywneKategorie = wczytajFiltr();
 
 const pasekKategorii = document.querySelector("#kategorie");
 const panelFiltrow = document.querySelector("#panelFiltrow");
@@ -49,6 +67,7 @@ function synchronizujKontrolki() {
 
 function ustawFiltr(nowyZbior) {
     aktywneKategorie = nowyZbior;
+    zapiszFiltr(aktywneKategorie);
     odswiez();
 }
 
