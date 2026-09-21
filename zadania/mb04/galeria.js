@@ -49,4 +49,12 @@ function ustawFiltr(nowyZbior) {
     odswiez();
 }
 
+pasekKategorii.addEventListener("click", event => {
+    const przycisk = event.target.closest("button");
+    if (!przycisk) return;
+
+    const kat = przycisk.dataset.kategoria;
+    ustawFiltr(kat === "wszystkie" ? new Set(WSZYSTKIE_KATEGORIE) : new Set([kat]));
+});
+
 odswiez();
