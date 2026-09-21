@@ -24,12 +24,28 @@ const pasekKategorii = document.querySelector("#kategorie");
 const panelFiltrow = document.querySelector("#panelFiltrow");
 const galeria = document.querySelector("#galeria");
 const brakwynikow = document.querySelector("#brakwynikow");
+const formularz = document.querySelector("#formDodajZdjecie");
 
 const CHECKBOX_KATEGORIA = {
     filtrGory: "gory",
     filtrMorze: "morze",
     filtrMiasto: "miasto",
 };
+
+const POLA_FORMULARZA = [
+    {
+        id: "tytul",
+        sprawdz: pole => pole.value.trim().length >= 3,
+    },
+    {
+        id: "kategoria",
+        sprawdz: pole => pole.value !== "",
+    },
+    {
+        id: "zgoda",
+        sprawdz: pole => pole.checked,
+    },
+];
 
 let sortRosnaco = true;
 const sortujBtn = document.querySelector("#sortujBtn");
@@ -85,6 +101,28 @@ function sortujAlfabetycznie(rosnaco = true) {
     karty.forEach(karta => galeria.append(karta));
 }
 
+function pokazStanPola(pole, poprawne) {
+    pole.classList.toggle("is-invalid", !poprawne);
+}
+
+function sprawdzWszystkie() {
+    let wszystkoPoprawne = true;
+    let pierwszeBledne = null;
+
+    for (const opis of POLA_FORMULARZA) {
+        const pole = document.querySelector(`#${opis.id}`);
+        const poprawne = opis.sprawdz(pole);
+        pokazStanPola(pole, poprawne);
+
+        if (!poprawne) {
+            wszystkoPoprawne = false;
+            if (!pierwszeBledne) pierwszeBledne = pole;
+        }
+    }
+
+    return { wszystkoPoprawne, pierwszeBledne };
+}
+
 pasekKategorii.addEventListener("click", event => {
     const przycisk = event.target.closest("button");
     if (!przycisk) return;
@@ -112,6 +150,40 @@ sortujBtn.addEventListener("click", () => {
     sortujAlfabetycznie(sortRosnaco);
     sortRosnaco = !sortRosnaco;
     sortujBtn.textContent = sortRosnaco ? "Sortuj A→Z" : "Sortuj Z→A";
+});
+
+formularz.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const { wszystkoPoprawne, pierwszeBledne } = sprawdzWszystkie();
+
+    if (!wszystkoPoprawne) {
+        pierwszeBledne.focus();
+        return;
+    }
+
+    const dane = {
+        tytul: document.querySelector("#tytul").value.trim(),
+        kategoria: document.querySelector("#kategoria").value,
+        zgoda: document.querySelector("#zgoda").checked,
+    };
+
+    console.log("Dane z formularza:", dane);
+
+    document.querySelector("#dodajZdjecieSukces").hidden = false;
+
+    setTimeout(() => {
+        const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector("#dodajZdjecie"));
+        modal.hide();
+    }, 900);
+});
+
+document.querySelector("#dodajZdjecie").addEventListener("hidden.bs.modal", () => {
+    formularz.reset();
+    document.querySelector("#dodajZdjecieSukces").hidden = true;
+    POLA_FORMULARZA.forEach(opis => {
+        document.querySelector(`#${opis.id}`).classList.remove("is-invalid");
+    });
 });
 
 odswiez();
