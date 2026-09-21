@@ -186,4 +186,15 @@ document.querySelector("#dodajZdjecie").addEventListener("hidden.bs.modal", () =
     });
 });
 
+POLA_FORMULARZA.forEach(opis => {
+    const pole = document.querySelector(`#${opis.id}`);
+    const zdarzenie = pole.type === "checkbox" || pole.tagName === "SELECT" ? "change" : "input";
+
+    pole.addEventListener(zdarzenie, () => {
+        if (pole.classList.contains("is-invalid")) {
+            pokazStanPola(pole, opis.sprawdz(pole));
+        }
+    });
+});
+
 odswiez();
