@@ -13,6 +13,9 @@ const CHECKBOX_KATEGORIA = {
     filtrMiasto: "miasto",
 };
 
+let sortRosnaco = true;
+const sortujBtn = document.querySelector("#sortujBtn");
+
 function odswiez() {
     const karty = galeria.querySelectorAll(":scope > [data-kategoria]");
     let widoczne = 0;
@@ -49,6 +52,20 @@ function ustawFiltr(nowyZbior) {
     odswiez();
 }
 
+function sortujAlfabetycznie(rosnaco = true) {
+    const karty = Array.from(galeria.querySelectorAll(":scope > [data-kategoria]"));
+
+    karty.sort((a, b) => {
+        const tytulA = a.querySelector(".card-title").textContent.trim();
+        const tytulB = b.querySelector(".card-title").textContent.trim();
+        return rosnaco
+            ? tytulA.localeCompare(tytulB, "pl")
+            : tytulB.localeCompare(tytulA, "pl");
+    });
+
+    karty.forEach(karta => galeria.append(karta));
+}
+
 pasekKategorii.addEventListener("click", event => {
     const przycisk = event.target.closest("button");
     if (!przycisk) return;
@@ -70,6 +87,12 @@ panelFiltrow.addEventListener("change", event => {
         nowyZbior.delete(kategoria);
     }
     ustawFiltr(nowyZbior);
+});
+
+sortujBtn.addEventListener("click", () => {
+    sortujAlfabetycznie(sortRosnaco);
+    sortRosnaco = !sortRosnaco;
+    sortujBtn.textContent = sortRosnaco ? "Sortuj A→Z" : "Sortuj Z→A";
 });
 
 odswiez();
