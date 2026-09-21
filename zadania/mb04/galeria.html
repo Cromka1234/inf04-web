@@ -29,7 +29,7 @@
         </div>
     </nav>
 
-    <!-- ===== NAGŁÓWEK STRONY ===== -->
+    <!-- ===== NAGłÓWEK STRONY ===== -->
     <header class="container py-4 py-lg-5">
         <div class="row align-items-center g-3">
             <div class="col-12 col-lg-8">
@@ -65,7 +65,7 @@
             <button type="button" class="btn btn-outline-primary" data-kategoria="miasto">Miasto</button>
         </div>
 
-        <!-- ===== ===== BRAK WYNIKÓW: pokazuje/chowa JS w zależności od filtra ===== -->
+        <!-- ===== BRAK WYNIKÓW ===== -->
         <div id="brakwynikow" class="alert alert-warning" hidden>
             Nie znaleziono zdjęć w tej kategorii.
         </div>
@@ -351,21 +351,22 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="formDodajZdjecie" novalidate>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="tytul" class="form-label">Tytuł</label>
-                                <input type="text" class="form-control is-invalid" id="tytul" value="">
-                                <div class="invalid-feedback">Podaj tytuł zdjęcia – to pole jest wymagane.</div>
+                                <input type="text" class="form-control" id="tytul" value="">
+                                <div class="invalid-feedback">Podaj tytuł zdjęcia – co najmniej 3 znaki.</div>
                             </div>
                             <div class="col-md-6">
                                 <label for="kategoria" class="form-label">Kategoria</label>
                                 <select class="form-select" id="kategoria">
-                                    <option selected>Wybierz kategorię...</option>
-                                    <option>Góry</option>
-                                    <option>Morze</option>
-                                    <option>Miasto</option>
+                                    <option value="" selected>Wybierz kategorię...</option>
+                                    <option value="gory">Góry</option>
+                                    <option value="morze">Morze</option>
+                                    <option value="miasto">Miasto</option>
                                 </select>
+                                <div class="invalid-feedback">Wybierz kategorię zdjęcia.</div>
                             </div>
                             <div class="col-12">
                                 <label for="plik" class="form-label">Plik ze zdjęciem</label>
@@ -383,6 +384,12 @@
                                     <label class="form-check-label" for="zgoda">
                                         Zgadzam się na publikację zdjęcia w galerii
                                     </label>
+                                    <div class="invalid-feedback">Musisz wyrazić zgodę, żeby dodać zdjęcie.</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div id="dodajZdjecieSukces" class="alert alert-success mb-0" hidden>
+                                    Zdjęcie zostało dodane (makieta – nic nigdzie nie trafia).
                                 </div>
                             </div>
                         </div>
@@ -390,7 +397,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-                    <button type="submit" class="btn btn-primary">Zapisz</button>
+                    <button type="submit" class="btn btn-primary" form="formDodajZdjecie">Zapisz</button>
                 </div>
             </div>
         </div>
