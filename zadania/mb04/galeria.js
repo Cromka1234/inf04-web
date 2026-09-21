@@ -1,29 +1,14 @@
 const WSZYSTKIE_KATEGORIE = ["gory", "morze", "miasto"];
-const KLUCZ_LOCALSTORAGE = "galeria-filtruj";
-
-function zapiszFiltr(zbior) {
-    localStorage.setItem(KLUCZ_LOCALSTORAGE, JSON.stringify([...zbior]));
-}
-
-function wczytajFiltr() {
-    const zapisane = localStorage.getItem(KLUCZ_LOCALSTORAGE);
-    if (!zapisane) return new Set(WSZYSTKIE_KATEGORIE);
-
-    try {
-        const tablica = JSON.parse(zapisane);
-        const poprawne = tablica.filter(k => WSZYSTKIE_KATEGORIE.includes(k));
-        return poprawne.length ? new Set(poprawne) : new Set(WSZYSTKIE_KATEGORIE);
-    } catch {
-        return new Set(WSZYSTKIE_KATEGORIE);
-    }
-}
+const KLUCZ_LOCALSTORAGE = "galeria-filtr";
 
 let aktywneKategorie = wczytajFiltr();
+let sortRosnaco = true;
 
 const pasekKategorii = document.querySelector("#kategorie");
 const panelFiltrow = document.querySelector("#panelFiltrow");
 const galeria = document.querySelector("#galeria");
 const brakwynikow = document.querySelector("#brakwynikow");
+const sortujBtn = document.querySelector("#sortujBtn");
 const formularz = document.querySelector("#formDodajZdjecie");
 
 const CHECKBOX_KATEGORIA = {
@@ -31,24 +16,6 @@ const CHECKBOX_KATEGORIA = {
     filtrMorze: "morze",
     filtrMiasto: "miasto",
 };
-
-const POLA_FORMULARZA = [
-    {
-        id: "tytul",
-        sprawdz: pole => pole.value.trim().length >= 3,
-    },
-    {
-        id: "kategoria",
-        sprawdz: pole => pole.value !== "",
-    },
-    {
-        id: "zgoda",
-        sprawdz: pole => pole.checked,
-    },
-];
-
-let sortRosnaco = true;
-const sortujBtn = document.querySelector("#sortujBtn");
 
 function odswiez() {
     const karty = galeria.querySelectorAll(":scope > [data-kategoria]");
@@ -87,6 +54,29 @@ function ustawFiltr(nowyZbior) {
     odswiez();
 }
 
+pasekKategorii.addEventListener("click", event => {
+    const przycisk = event.target.closest("button");
+    if (!przycisk) return;
+
+    const kat = przycisk.dataset.kategoria;
+    ustawFiltr(kat === "wszystkie" ? new Set(WSZYSTKIE_KATEGORIE) : new Set([kat]));
+});
+
+panelFiltrow.addEventListener("change", event => {
+    if (!event.target.matches('input[type="checkbox"]')) return;
+
+    const kategoria = CHECKBOX_KATEGORIA[event.target.id];
+    if (!kategoria) return; // ktoś kiedyś doda w panelu inny checkbox - nie nasz interes
+
+    const nowyZbior = new Set(aktywneKategorie);
+    if (event.target.checked) {
+        nowyZbior.add(kategoria);
+    } else {
+        nowyZbior.delete(kategoria);
+    }
+    ustawFiltr(nowyZbior);
+});
+
 function sortujAlfabetycznie(rosnaco = true) {
     const karty = Array.from(galeria.querySelectorAll(":scope > [data-kategoria]"));
 
@@ -100,6 +90,44 @@ function sortujAlfabetycznie(rosnaco = true) {
 
     karty.forEach(karta => galeria.append(karta));
 }
+
+sortujBtn.addEventListener("click", () => {
+    sortujAlfabetycznie(sortRosnaco);
+    sortRosnaco = !sortRosnaco;
+    sortujBtn.textContent = sortRosnaco ? "Sortuj A→Z" : "Sortuj Z→A";
+});
+
+function zapiszFiltr(zbior) {
+    localStorage.setItem(KLUCZ_LOCALSTORAGE, JSON.stringify([...zbior]));
+}
+
+function wczytajFiltr() {
+    const zapisane = localStorage.getItem(KLUCZ_LOCALSTORAGE);
+    if (!zapisane) return new Set(WSZYSTKIE_KATEGORIE);
+
+    try {
+        const tablica = JSON.parse(zapisane);
+        const poprawne = tablica.filter(k => WSZYSTKIE_KATEGORIE.includes(k));
+        return poprawne.length ? new Set(poprawne) : new Set(WSZYSTKIE_KATEGORIE);
+    } catch {
+        return new Set(WSZYSTKIE_KATEGORIE);
+    }
+}
+
+const POLA_FORMULARZA = [
+    {
+        id: "tytul",
+        sprawdz: pole => pole.value.trim().length >= 3,
+    },
+    {
+        id: "kategoria",
+        sprawdz: pole => pole.value !== "",
+    },
+    {
+        id: "zgoda",
+        sprawdz: pole => pole.checked,
+    },
+];
 
 function pokazStanPola(pole, poprawne) {
     pole.classList.toggle("is-invalid", !poprawne);
@@ -123,33 +151,15 @@ function sprawdzWszystkie() {
     return { wszystkoPoprawne, pierwszeBledne };
 }
 
-pasekKategorii.addEventListener("click", event => {
-    const przycisk = event.target.closest("button");
-    if (!przycisk) return;
+POLA_FORMULARZA.forEach(opis => {
+    const pole = document.querySelector(`#${opis.id}`);
+    const zdarzenie = pole.type === "checkbox" || pole.tagName === "SELECT" ? "change" : "input";
 
-    const kat = przycisk.dataset.kategoria;
-    ustawFiltr(kat === "wszystkie" ? new Set(WSZYSTKIE_KATEGORIE) : new Set([kat]));
-});
-
-panelFiltrow.addEventListener("change", event => {
-    if (!event.target.matches('input[type="checkbox"]')) return;
-
-    const kategoria = CHECKBOX_KATEGORIA[event.target.id];
-    if (!kategoria) return;
-
-    const nowyZbior = new Set(aktywneKategorie);
-    if (event.target.checked) {
-        nowyZbior.add(kategoria);
-    } else {
-        nowyZbior.delete(kategoria);
-    }
-    ustawFiltr(nowyZbior);
-});
-
-sortujBtn.addEventListener("click", () => {
-    sortujAlfabetycznie(sortRosnaco);
-    sortRosnaco = !sortRosnaco;
-    sortujBtn.textContent = sortRosnaco ? "Sortuj A→Z" : "Sortuj Z→A";
+    pole.addEventListener(zdarzenie, () => {
+        if (pole.classList.contains("is-invalid")) {
+            pokazStanPola(pole, opis.sprawdz(pole));
+        }
+    });
 });
 
 formularz.addEventListener("submit", event => {
@@ -168,7 +178,7 @@ formularz.addEventListener("submit", event => {
         zgoda: document.querySelector("#zgoda").checked,
     };
 
-    console.log("Dane z formularza:", dane);
+    console.log("Dane z formularza (makieta, nigdzie nie wysyłane):", dane);
 
     document.querySelector("#dodajZdjecieSukces").hidden = false;
 
@@ -183,17 +193,6 @@ document.querySelector("#dodajZdjecie").addEventListener("hidden.bs.modal", () =
     document.querySelector("#dodajZdjecieSukces").hidden = true;
     POLA_FORMULARZA.forEach(opis => {
         document.querySelector(`#${opis.id}`).classList.remove("is-invalid");
-    });
-});
-
-POLA_FORMULARZA.forEach(opis => {
-    const pole = document.querySelector(`#${opis.id}`);
-    const zdarzenie = pole.type === "checkbox" || pole.tagName === "SELECT" ? "change" : "input";
-
-    pole.addEventListener(zdarzenie, () => {
-        if (pole.classList.contains("is-invalid")) {
-            pokazStanPola(pole, opis.sprawdz(pole));
-        }
     });
 });
 
