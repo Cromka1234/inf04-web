@@ -4,6 +4,8 @@ import Gallery from './components/Gallery.jsx'
 import Footer from './components/Footer.jsx'
 import AddPhotoModal from './components/AddPhotoModal.jsx'
 import FiltersOffcanvas from './components/FiltersOffcanvas.jsx'
+import './App.css'
+
 function App() {
   return (
     <>
@@ -45,10 +47,11 @@ function App() {
       <main className="container">
         <CategoryBar />
         <Gallery />
-        <Footer />
-        <AddPhotoModal />
-        <FiltersOffcanvas />
       </main>
+
+      <Footer />
+      <AddPhotoModal />
+      <FiltersOffcanvas />
     </>
   )
 }
