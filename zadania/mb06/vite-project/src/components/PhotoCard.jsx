@@ -1,35 +1,51 @@
-function PhotoCard({ id, title, description, category, image, alt }) {
-  const KOLOR_KATEGORII = {
-    gory: 'success',
-    morze: 'primary',
-    miasto: 'warning'
-  }
-
-  const NAZWA_KATEGORII = {
-    gory: 'Góry',
-    morze: 'Morze',
-    miasto: 'Miasto'
-  }
-
+function PhotoCard({
+  id,
+  title,
+  description,
+  category,
+  image,
+  alt,
+  favorite,
+  onUsun,
+  onPrzelacz,
+}) {
   return (
     <div className="card h-100 shadow-sm">
-      <img src={image} className="card-img-top" alt={alt} />
+      <img src={image} className="card-img-top object-fit-cover" alt={alt} height="220" />
       <div className="card-body d-flex flex-column">
-        <h3 className="card-title h5">{title}</h3>
-        <p>
-          <span className={`badge text-bg-${KOLOR_KATEGORII[category]}`}>
-            {NAZWA_KATEGORII[category]}
-          </span>
-        </p>
+        <div className="d-flex justify-content-between align-items-start">
+          <h3 className="card-title h5">{title}</h3>
+          <button
+            type="button"
+            className="btn btn-link p-0 fs-4 lh-1"
+            onClick={onPrzelacz}
+            aria-label={favorite ? 'Usuń z ulubionych' : 'Dodaj do ulubionych'}
+            aria-pressed={favorite}
+          >
+            {favorite ? (
+              <i className="bi bi-star-fill text-warning" />
+            ) : (
+              <i className="bi bi-star text-secondary" />
+            )}
+          </button>
+        </div>
+        <span className="badge text-bg-secondary mb-2 align-self-start">
+          {category}
+        </span>
         <p className="card-text text-body-secondary">{description}</p>
-        <button
-          type="button"
-          className="btn btn-outline-primary mt-auto"
-          data-bs-toggle="modal"
-          data-bs-target={`#zdjecie${id}`}
-        >
-          Powiększ
-        </button>
+        <div className="d-flex gap-2 mt-auto">
+          <button
+            type="button"
+            className="btn btn-outline-primary flex-fill"
+            data-bs-toggle="modal"
+            data-bs-target={`#zdjecie${id}`}
+          >
+            Powiększ
+          </button>
+          <button type="button" className="btn btn-outline-danger" onClick={onUsun}>
+            Usuń
+          </button>
+        </div>
       </div>
     </div>
   )
