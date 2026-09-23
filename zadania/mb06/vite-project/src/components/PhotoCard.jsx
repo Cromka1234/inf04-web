@@ -25,10 +25,11 @@ function PhotoCard({
             {favorite ? (
               <i className="bi bi-star-fill text-warning" />
             ) : (
-              <i className="bi bi-star text-secondary" />
+              <i className="bi bi-star" />
             )}
           </button>
         </div>
+        {/* ...reszta karty (badge, opis, przyciski Powiększ/Usuń) bez zmian... */}
         <span className="badge text-bg-secondary mb-2 align-self-start">
           {category}
         </span>
