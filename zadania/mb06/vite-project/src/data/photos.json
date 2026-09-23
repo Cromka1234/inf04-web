@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "title": "Morskie Oko o świcie",
+    "description": "Tafla jeziora w Tatrach tuż przed wschodem słońca.",
+    "category": "gory",
+    "image": "https://picsum.photos/seed/morskie-oko/600/400",
+    "imageLarge": "https://picsum.photos/seed/morskie-oko/1200/800",
+    "alt": "Tafla jeziora w Tatrach tuż przed wschodem słońca.",
+    "favorite": false
+  },
+  {
+    "id": 2,
+    "title": "Szrenica w chmurach",
+    "description": "Widok na szlak w Karkonoszach spowity gęstą mgłą.",
+    "category": "gory",
+    "image": "https://picsum.photos/seed/szrenica/600/400",
+    "imageLarge": "https://picsum.photos/seed/szrenica/1200/800",
+    "alt": "Widok na szlak w Karkonoszach spowity gęstą mgłą.",
+    "favorite": false
+  },
+  {
+    "id": 3,
+    "title": "Bałtycki zachód słońca",
+    "description": "Złota godzina nad brzegiem morza w Łebie.",
+    "category": "morze",
+    "image": "https://picsum.photos/seed/baltyk/600/400",
+    "imageLarge": "https://picsum.photos/seed/baltyk/1200/800",
+    "alt": "Złota godzina nad brzegiem morza w Łebie.",
+    "favorite": false
+  },
+  {
+    "id": 4,
+    "title": "Klify w Gdyni",
+    "description": "Pionowe ściany klifu u zbiegu z Zatoką Gdańską.",
+    "category": "morze",
+    "image": "https://picsum.photos/seed/klify/600/400",
+    "imageLarge": "https://picsum.photos/seed/klify/1200/800",
+    "alt": "Pionowe ściany klifu u zbiegu z Zatoką Gdańską.",
+    "favorite": false
+  },
+  {
+    "id": 5,
+    "title": "Stare Miasto w Warszawie",
+    "description": "Kolorowe kamieniczki na tle popołudniowego nieba.",
+    "category": "miasto",
+    "image": "https://picsum.photos/seed/warszawa/600/400",
+    "imageLarge": "https://picsum.photos/seed/warszawa/1200/800",
+    "alt": "Kolorowe kamieniczki na tle popołudniowego nieba.",
+    "favorite": false
+  },
+  {
+    "id": 6,
+    "title": "Nowoczesny Wrocław",
+    "description": "Architekturę miejska nad Odrą o zmierzchu.",
+    "category": "miasto",
+    "image": "https://picsum.photos/seed/wroclaw/600/400",
+    "imageLarge": "https://picsum.photos/seed/wroclaw/1200/800",
+    "alt": "Architekturę miejska nad Odrą o zmierzchu.",
+    "favorite": false
+  },
+  {
+    "id": 7,
+    "title": "Giewont w pełnym słońcu",
+    "description": "Kultowy szczyt Tatr Zachodnich na tle bezchmurnego nieba.",
+    "category": "gory",
+    "image": "https://picsum.photos/seed/giewont/600/400",
+    "imageLarge": "https://picsum.photos/seed/giewont/1200/800",
+    "alt": "Kultowy szczyt Tatr Zachodnich na tle bezchmurnego nieba.",
+    "favorite": false
+  },
+  {
+    "id": 8,
+    "title": "Nadmorski molo w Sopocie",
+    "description": "Najdłuższe drewniane molo w Europie w jesienny poranek.",
+    "category": "morze",
+    "image": "https://picsum.photos/seed/sopot/600/400",
+    "imageLarge": "https://picsum.photos/seed/sopot/1200/800",
+    "alt": "Najdłuższe drewniane molo w Europie w jesienny poranek.",
+    "favorite": false
+  }
+]
