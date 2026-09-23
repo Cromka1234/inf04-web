@@ -21,6 +21,14 @@ function App() {
     setZdjecia(zdjecia.filter(z => z.id !== id))
   }
 
+  function dodajZdjecie(noweZdjecie) {
+    const obiektZdjecia = {
+      id: Date.now(),
+      ...noweZdjecie,
+    }
+    setZdjecia([obiektZdjecia, ...zdjecia])
+  }
+
   return (
     <>
       <Navbar />
@@ -74,7 +82,7 @@ function App() {
       </main>
 
       <Footer />
-      <AddPhotoModal />
+      <AddPhotoModal onDodaj={dodajZdjecie} />
       <FiltersOffcanvas
         aktywna={aktywnaKategoria}
         onWybierz={setAktywnaKategoria}
