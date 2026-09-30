@@ -61,6 +61,10 @@ function App() {
         </button>
       </div>
 
+      <p className="text-body-secondary">
+        Znaleziono {widoczne.length} z {kursy.length} kursów
+      </p>
+
       <ol>
         {widoczne.map(({ kurs, numer }) => (
           <li key={numer} value={numer}>{kurs}</li>
