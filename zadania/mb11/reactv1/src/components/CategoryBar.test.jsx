@@ -5,12 +5,10 @@ import { describe, it, expect, vi } from 'vitest'
 import CategoryBar from './CategoryBar.jsx'
 
 describe('CategoryBar', () => {
-  it('wywołuje onWybierz z poprawną kategorią po kliknięciu', async () => {
-    const onWybierz = vi.fn()
-    render(<CategoryBar aktywna="wszystkie" onWybierz={onWybierz} />)
+  it('oznacza aktywną kategorię przez aria-pressed', () => {
+    render(<CategoryBar aktywna="gory" onWybierz={() => {}} />)
 
-    await userEvent.click(screen.getByRole('button', { name: 'Góry' }))
-
-    expect(onWybierz).toHaveBeenCalledWith('gory')
+    expect(screen.getByRole('button', { name: 'Góry' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: 'Morze' })).toHaveAttribute('aria-pressed', 'false')
   })
 })
