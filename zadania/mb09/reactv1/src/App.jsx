@@ -4,7 +4,6 @@ import GaleriaPage from './pages/GaleriaPage.jsx'
 import ZdjeciePage from './pages/ZdjeciePage.jsx'
 import DodajPage from './pages/DodajPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
-import './App.css'
 
 function App() {
     return (
