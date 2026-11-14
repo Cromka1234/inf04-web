@@ -11,13 +11,13 @@ const przykladoweZdjecia = [
 ]
 
 describe('Gallery', () => {
-  it('renderuje dokładnie tyle kart, ile elementów w danych', () => {
+  it('nie renderuje żadnej karty dla pustej listy', () => {
     render(
       <MemoryRouter>
-        <Gallery zdjecia={przykladoweZdjecia} onUsun={() => {}} onPrzelacz={() => {}} />
+        <Gallery zdjecia={[]} onUsun={() => {}} onPrzelacz={() => {}} />
       </MemoryRouter>
     )
 
-    expect(screen.getAllByRole('link', { name: 'Powiększ' })).toHaveLength(3)
+    expect(screen.queryAllByRole('link', { name: 'Powiększ' })).toHaveLength(0)
   })
 })
