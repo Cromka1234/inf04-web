@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { zdjeciaStartowe } from './zdjecia.js'
 
 const NAZWY_KATEGORII = { 1: 'Kwiaty', 2: 'Zwierzęta', 3: 'Samochody' }
@@ -7,6 +7,10 @@ const KATEGORIE = [1, 2, 3]
 function App() {
   const [zdjecia, setZdjecia] = useState(zdjeciaStartowe)
   const [aktywneKategorie, setAktywneKategorie] = useState(KATEGORIE)
+
+  const altRef = useRef(null)
+  const filenameRef = useRef(null)
+  const categoryRef = useRef(null)
 
   function przelaczKategorie(kategoria) {
     setAktywneKategorie(aktywne =>
@@ -18,6 +22,22 @@ function App() {
 
   function pobierz(id) {
     setZdjecia(zdjecia.map(z => (z.id === id ? { ...z, downloads: z.downloads + 1 } : z)))
+  }
+
+  function dodajZdjecie(event) {
+    event.preventDefault()
+    const noweId = Math.max(...zdjecia.map(z => z.id)) + 1
+    setZdjecia([
+      ...zdjecia,
+      {
+        id: noweId,
+        alt: altRef.current.value,
+        filename: filenameRef.current.value,
+        category: Number(categoryRef.current.value),
+        downloads: 0,
+      },
+    ])
+    event.target.reset()
   }
 
   const widoczne = zdjecia.filter(z => aktywneKategorie.includes(z.category))
@@ -57,6 +77,29 @@ function App() {
           </div>
         ))}
       </div>
+      <hr className="my-4" />
+      <h2 className="h4">Dodaj zdjęcie</h2>
+      <form onSubmit={dodajZdjecie} className="row g-3">
+        <div className="col-md-6">
+          <label htmlFor="alt" className="form-label">Opis zdjęcia (alt)</label>
+          <input id="alt" ref={altRef} className="form-control" required />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="kategoria" className="form-label">Kategoria</label>
+          <select id="kategoria" ref={categoryRef} className="form-select" defaultValue="1">
+            <option value="1">Kwiaty</option>
+            <option value="2">Zwierzęta</option>
+            <option value="3">Samochody</option>
+          </select>
+        </div>
+        <div className="col-12">
+          <label htmlFor="filename" className="form-label">Adres URL zdjęcia</label>
+          <input id="filename" ref={filenameRef} className="form-control" placeholder="https://..." required />
+        </div>
+        <div className="col-12">
+          <button type="submit" className="btn btn-primary">Zapisz</button>
+        </div>
+      </form>
     </div>
   )
 }
