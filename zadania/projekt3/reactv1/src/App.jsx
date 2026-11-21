@@ -25,6 +25,10 @@ function App() {
     rower.model.toLowerCase().includes(szukaj.toLowerCase())
   )
 
+  function usun(id) {
+    setRowery(rowery.filter(rower => rower.id !== id))
+  }
+
   if (isLoading) {
     return (
       <div className="container mt-4">
@@ -66,10 +70,19 @@ function App() {
       <div className="row g-3">
         {widoczne.map(rower => (
           <div key={rower.id} className="col-12 col-md-6">
-            <div className="card h-100">
+            <div className={`card h-100${rower.dostepny ? '' : ' opacity-50'}`}>
               <div className="card-body">
                 <h3 className="card-title h5">{rower.model}</h3>
                 <span className="badge text-bg-secondary">{rower.typ}</span>
+                <div>
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={() => usun(rower.id)}
+                  >
+                    Usuń
+                  </button>
+                </div>
               </div>
             </div>
           </div>
