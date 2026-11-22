@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import './App.css'
 import {Routes, Route, Link} from 'react-router-dom'
-import wydarzenia from './wydarzenia.js'
-import { useParams } from 'react-router-dom'
+import {wydarzenia} from './wydarzenia.js'
+import { useParams, useNavigate } from 'react-router-dom'
 const MIASTA = [...new Set(wydarzenia.map(w => w.miasto))]
+
 function ListaWydarzenPage(){
   const [aktywneMiasta, setAktywneMiasta] = useState(MIASTA)
 
@@ -15,7 +16,7 @@ function ListaWydarzenPage(){
     )
   }
 
-  const widoczne = wydarzenia.filter(w => aktywneMiasta.filter(w.miasto))
+  const widoczne = wydarzenia.filter(w => aktywneMiasta.includes(w.miasto))
 
   return(
     <div className='container mt-4'>
@@ -30,7 +31,7 @@ function ListaWydarzenPage(){
         ))}
       </div>
       <div className='row g-3'>
-        {wydarzenia.map(wydarzenie => (
+        {widoczne.map(wydarzenie => (
           <div key={wydarzenie.id} className='col-12 col-md-4'>
             <div className='card h-100'>
               <div className='card-body'>
@@ -49,24 +50,50 @@ function ListaWydarzenPage(){
     </div>
   )
 }
+
 function SzczegolyWydarzeniaPage(){
   const { id } = useParams()
+  const navigate = useNavigate()
   const wydarzenie = wydarzenia.find(w => w.id === Number(id))
-
+  if(!wydarzenie){
+    return(
+      <div className='container mt-4'>
+        <div className='alert alert-warning'>
+          Nie znaleziono wydarzenia o numerze {id}
+          <button type='button' className='btn btn-outline-primary' onClick={() => navigate(-1)}>
+            Wstecz
+          </button>
+        </div>
+      </div>
+    )
+  }
   return(
     <div className='container mt-4'>
-      <h1>{wydarzenia.nazwa}</h1>
-      <p>Miasto: {wydarzenia.miasto}</p>
-      <p>Data: {wydarzenia.data}</p>
-      <p>Cena: {wydarzenia.cena === 0 ? "Wstep wolny" : `${wydarzenia.cena} zl`}</p>
+      <h1>{wydarzenie.nazwa}</h1>
+      <p>Miasto: {wydarzenie.miasto}</p>
+      <p>Data: {wydarzenie.data}</p>
+      <p>Cena: {wydarzenie.cena === 0 ? "Wstep wolny" : `${wydarzenie.cena} zl`}</p>
+      <button type='button' className='btn btn-outline-primary' onClick={() => navigate(-1)}>
+        Wstecz
+      </button>
+    </div>
+  )
+}
+
+function NotFoundPage(){
+  return(
+    <div className='container mt-4'>
+      <h1>Nie ma takiej strony</h1>
+      <Link to="/">Wroc do listy</Link>
     </div>
   )
 }
 function App() {
   return(
     <Routes>
-      <Route path='/' element={ListaWydarzenPage}/>
-      <Route path='/wydarzenie/:id' element={SzczegolyWydarzeniaPage}/>
+      <Route path='/' element={<ListaWydarzenPage/>}/>
+      <Route path='/wydarzenie/:id' element={<SzczegolyWydarzeniaPage/>}/>
+      <Route path="*" element={<NotFoundPage />}/>
     </Routes>
   )
 }
